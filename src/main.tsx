@@ -5,9 +5,15 @@ import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import router from "./router/router.tsx";
-
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "./redux/feature/store.ts";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>
   </StrictMode>
 );
