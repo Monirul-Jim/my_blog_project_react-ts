@@ -14,7 +14,6 @@ interface IRegistrationErrorResponse {
   username?: string[];
   email?: string[];
   password?: string[];
-  // Add other fields you expect to see in the error response
 }
 
 type IError = {

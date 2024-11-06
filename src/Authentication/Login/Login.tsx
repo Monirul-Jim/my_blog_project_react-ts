@@ -7,6 +7,8 @@ import { setUser, TUser } from "../../redux/feature/auth/authSlice";
 interface IFormInput {
   email: string;
   password: string;
+  first_name: string;
+  last_name: string;
 }
 interface IRegistrationErrorResponse {
   error?: string[];
@@ -29,7 +31,6 @@ const Login = () => {
   const onSubmit: SubmitHandler<IFormInput> = async (formData) => {
     try {
       const res = await login(formData).unwrap();
-      console.log(res);
 
       const user = verifyToken(res.access) as TUser;
 
@@ -37,6 +38,8 @@ const Login = () => {
         setUser({
           user: {
             ...user,
+            first_name: res.first_name,
+            last_name: res.last_name,
             username: res.username,
             email: res.email,
           },

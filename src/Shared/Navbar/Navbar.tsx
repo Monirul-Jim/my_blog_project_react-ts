@@ -1,6 +1,13 @@
 import { useState } from "react";
+import { logout, useCurrentUser } from "../../redux/feature/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/feature/hooks";
 
 const Navbar = () => {
+  const user = useAppSelector(useCurrentUser);
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -71,29 +78,36 @@ const Navbar = () => {
                 Post
               </a>
               <a
-                href="/become-a-seller"
+                href="/become-a-writer/be-writer-and-spreed-knowledge"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >
-                Become a Seller
+                Become a Writer
               </a>
-              <a
-                href="/user-auth/login"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Login
-              </a>
-              <a
-                href="/user-auth/sign-up"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Register
-              </a>
-              <a
-                href="/logout"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Logout
-              </a>
+              {user ? (
+                <>
+                  <button
+                    onClick={handleLogout}
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <a
+                    href="/user-auth/login"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Login
+                  </a>
+                  <a
+                    href="/user-auth/sign-up"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Register
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -115,29 +129,36 @@ const Navbar = () => {
               Post
             </a>
             <a
-              href="/become-a-seller"
+              href="/become-a-writer/be-writer-and-spreed-knowledge"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
-              Become a Seller
+              Become a Writer
             </a>
-            <a
-              href="/user-auth/login"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            >
-              Login
-            </a>
-            <a
-              href="/user-auth/sign-up"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            >
-              Register
-            </a>
-            <a
-              href="/logout"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            >
-              Logout
-            </a>
+            {user ? (
+              <>
+                <button
+                  onClick={handleLogout}
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <a
+                  href="/user-auth/login"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Login
+                </a>
+                <a
+                  href="/user-auth/sign-up"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Register
+                </a>
+              </>
+            )}
           </div>
         </div>
       )}
