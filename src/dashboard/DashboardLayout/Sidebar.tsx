@@ -26,6 +26,14 @@ const Sidebar = () => {
             Writer Requests
           </a>
         </li>
+        <li>
+          <a
+            href="/dashboard/added-category-for-post"
+            className="block py-2 px-4 rounded hover:bg-gray-700"
+          >
+            Category
+          </a>
+        </li>
 
         <li>
           <a href="/" className="block py-2 px-4 rounded hover:bg-gray-700">

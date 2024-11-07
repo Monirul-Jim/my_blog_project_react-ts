@@ -9,6 +9,8 @@ import BecomeWriterRequest from "../dashboard/BecomeWriterRequest/BecomeWriterRe
 import DashboardLayout from "../dashboard/DashboardLayout/DashboardLayout";
 import ApprovedRequest from "../dashboard/ApprovedRequest/ApprovedRequest";
 import Post from "../Post/Post";
+import TermsAndConditions from "../Shared/TermsCondition/TermsCondition";
+import Category from "../dashboard/Category/Category";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,10 @@ const router = createBrowserRouter([
         path: "/write-a-blog-and-change-human-life/write-blog",
         element: <Post />,
       },
+      {
+        path: "/our-terms-and-condition",
+        element: <TermsAndConditions />,
+      },
     ],
   },
   {
@@ -52,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "accept-writer-request-or-declined",
         element: <ApprovedRequest />,
+      },
+      {
+        path: "added-category-for-post",
+        element: <Category />,
       },
     ],
   },

@@ -59,6 +59,19 @@ const BecomeWriter = () => {
         <h1 className="text-2xl font-bold text-center text-gray-700">
           Become a Writer
         </h1>
+        <p className="text-lg font-semibold text-gray-800 mt-6">
+          <span className="font-bold text-red-600">
+            To become a writer, please read our
+          </span>{" "}
+          <a
+            href="/our-terms-and-condition"
+            className="text-blue-600 underline"
+          >
+            Terms and Conditions
+          </a>
+          .
+        </p>
+
         {error && (error as IError).data?.detail && (
           <p className="text-red-600">{(error as IError)?.data?.detail}</p>
         )}
@@ -144,7 +157,7 @@ const BecomeWriter = () => {
                 className="mr-2"
               />
               I agree to the{" "}
-              <a href="/terms" className="text-blue-500">
+              <a href="/our-terms-and-condition" className="text-blue-500">
                 terms and conditions
               </a>
               .
