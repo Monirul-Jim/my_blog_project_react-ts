@@ -20,6 +20,8 @@ export type TUser = {
   first_name: string;
   last_name: string;
   email: string;
+  is_superuser: boolean;
+  roles: string[];
 };
 
 type TAuthState = {

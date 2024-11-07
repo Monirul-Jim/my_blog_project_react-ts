@@ -4,10 +4,12 @@ import { useAppDispatch, useAppSelector } from "../../redux/feature/hooks";
 
 const Navbar = () => {
   const user = useAppSelector(useCurrentUser);
+
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     dispatch(logout());
   };
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -71,12 +73,14 @@ const Navbar = () => {
               >
                 Home
               </a>
-              <a
-                href="/post"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Post
-              </a>
+              {user?.roles?.includes("writer") && (
+                <a
+                  href="/write-a-blog-and-change-human-life/write-blog"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Post
+                </a>
+              )}
               <a
                 href="/become-a-writer/be-writer-and-spreed-knowledge"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -108,6 +112,14 @@ const Navbar = () => {
                   </a>
                 </>
               )}
+              {user?.is_superuser && (
+                <a
+                  href="/dashboard"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Dashboard
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -122,12 +134,14 @@ const Navbar = () => {
             >
               Home
             </a>
-            <a
-              href="/post"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            >
-              Post
-            </a>
+            {user?.roles?.includes("writer") && (
+              <a
+                href="/write-a-blog-and-change-human-life/write-blog"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Post
+              </a>
+            )}
             <a
               href="/become-a-writer/be-writer-and-spreed-knowledge"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
@@ -158,6 +172,14 @@ const Navbar = () => {
                   Register
                 </a>
               </>
+            )}
+            {user?.is_superuser && (
+              <a
+                href="/dashboard"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Dashboard
+              </a>
             )}
           </div>
         </div>

@@ -42,6 +42,8 @@ const Login = () => {
             last_name: res.last_name,
             username: res.username,
             email: res.email,
+            is_superuser: res.is_superuser,
+            roles: res.roles,
           },
           token: res.access,
         })

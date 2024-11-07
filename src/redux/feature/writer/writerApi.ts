@@ -3,9 +3,10 @@ import { baseApi } from "../../api/baseApi";
 const writerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUserInfo: builder.query({
-      query: () => ({
+      query: (searchQuery) => ({
         url: "/auth/user/all-users/",
         method: "GET",
+        params: { search: searchQuery },
       }),
       providesTags: (result) => {
         if (result) {

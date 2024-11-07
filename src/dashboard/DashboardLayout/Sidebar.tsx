@@ -12,12 +12,21 @@ const Sidebar = () => {
         </li>
         <li>
           <a
+            href="/dashboard/accept-writer-request-or-declined"
+            className="block py-2 px-4 rounded hover:bg-gray-700"
+          >
+            Pending Request
+          </a>
+        </li>
+        <li>
+          <a
             href="/dashboard/writer-request-accept"
             className="block py-2 px-4 rounded hover:bg-gray-700"
           >
             Writer Requests
           </a>
         </li>
+
         <li>
           <a href="/" className="block py-2 px-4 rounded hover:bg-gray-700">
             Home

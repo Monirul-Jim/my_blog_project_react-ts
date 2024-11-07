@@ -7,6 +7,8 @@ import BecomeWriter from "../Writer/BecomeWriter/BecomeWriter";
 import MainDashboard from "../dashboard/MainDashboard/MainDashboard";
 import BecomeWriterRequest from "../dashboard/BecomeWriterRequest/BecomeWriterRequest";
 import DashboardLayout from "../dashboard/DashboardLayout/DashboardLayout";
+import ApprovedRequest from "../dashboard/ApprovedRequest/ApprovedRequest";
+import Post from "../Post/Post";
 
 const router = createBrowserRouter([
   {
@@ -29,19 +31,27 @@ const router = createBrowserRouter([
         path: "/become-a-writer/be-writer-and-spreed-knowledge",
         element: <BecomeWriter />,
       },
+      {
+        path: "/write-a-blog-and-change-human-life/write-blog",
+        element: <Post />,
+      },
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />, // Layout for dashboard
+    element: <DashboardLayout />,
     children: [
       {
-        path: "", // Empty path for the dashboard home
-        element: <MainDashboard />, // This will render when you visit /dashboard
+        path: "",
+        element: <MainDashboard />,
       },
       {
         path: "writer-request-accept",
-        element: <BecomeWriterRequest />, // This will show when you visit /dashboard/writer-request-accept
+        element: <BecomeWriterRequest />,
+      },
+      {
+        path: "accept-writer-request-or-declined",
+        element: <ApprovedRequest />,
       },
     ],
   },

@@ -12,7 +12,7 @@ type User = {
   roles: string[];
 };
 
-const UserList = () => {
+const BecomeWriterRequest = () => {
   const { data: users, isLoading, error } = useGetUserInfoQuery(null);
   const [updateUserRole, { isLoading: updateLoading }] =
     useUpdateUserRoleMutation();
@@ -36,6 +36,14 @@ const UserList = () => {
   return (
     <div className="container mx-auto p-6">
       <h2 className="text-3xl font-semibold text-gray-800 mb-6">User List</h2>
+      <div className="mb-6">
+        <input
+          type="text"
+          placeholder="Search by username, name, or email"
+          className="px-4 py-2 border rounded-md w-full md:w-1/2"
+        />
+        <button>Search</button>
+      </div>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
@@ -112,4 +120,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default BecomeWriterRequest;

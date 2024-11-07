@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const MainDashboard = () => {
   return (
     <div className="space-y-6">
@@ -18,12 +16,12 @@ const MainDashboard = () => {
           <p className="text-gray-500">
             Manage writer requests from the community.
           </p>
-          <Link
-            to="/dashboard/writer-request-accept"
+          <a
+            href="/dashboard/accept-writer-request-or-declined"
             className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
           >
             View Requests
-          </Link>
+          </a>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
@@ -31,12 +29,12 @@ const MainDashboard = () => {
           <p className="text-gray-500">
             View and manage the blog posts you've written.
           </p>
-          <Link
-            to="/dashboard/your-posts"
+          <a
+            href="/dashboard/your-posts"
             className="mt-4 inline-block bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
           >
             View Posts
-          </Link>
+          </a>
         </div>
       </div>
     </div>
