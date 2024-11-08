@@ -74,12 +74,20 @@ const Navbar = () => {
                 Home
               </a>
               {user?.roles?.includes("writer") && (
-                <a
-                  href="/write-a-blog-and-change-human-life/write-blog"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Post
-                </a>
+                <>
+                  <a
+                    href="/write-a-blog-and-change-human-life/write-blog"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Post
+                  </a>
+                  <a
+                    href="/writer-edit-write-his-her-post-as-his-wise"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    My Post
+                  </a>
+                </>
               )}
               <a
                 href="/become-a-writer/be-writer-and-spreed-knowledge"
@@ -135,12 +143,20 @@ const Navbar = () => {
               Home
             </a>
             {user?.roles?.includes("writer") && (
-              <a
-                href="/write-a-blog-and-change-human-life/write-blog"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Post
-              </a>
+              <>
+                <a
+                  href="/write-a-blog-and-change-human-life/write-blog"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Post
+                </a>
+                <a
+                  href="/writer-edit-write-his-her-post-as-his-wise"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  My Post
+                </a>
+              </>
             )}
             <a
               href="/become-a-writer/be-writer-and-spreed-knowledge"

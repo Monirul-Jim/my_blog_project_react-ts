@@ -11,8 +11,14 @@ import ApprovedRequest from "../dashboard/ApprovedRequest/ApprovedRequest";
 import Post from "../Post/Post";
 import TermsAndConditions from "../Shared/TermsCondition/TermsCondition";
 import Category from "../dashboard/Category/Category";
+import NotFound from "../NotFound/NotFound";
+import MyPost from "../Post/MyPost";
 
 const router = createBrowserRouter([
+  {
+    path: "*",
+    element: <NotFound />,
+  },
   {
     path: "/",
     element: <App />,
@@ -36,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/write-a-blog-and-change-human-life/write-blog",
         element: <Post />,
+      },
+      {
+        path: "/writer-edit-write-his-her-post-as-his-wise",
+        element: <MyPost />,
       },
       {
         path: "/our-terms-and-condition",

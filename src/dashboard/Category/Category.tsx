@@ -316,20 +316,18 @@ const Category = () => {
     isLoading: cIsLoading,
     error: cError,
   } = useGetCategoryQuery(null);
-  const [updateCategory, { isLoading: uLoading, error: uError }] =
-    useUpdateCategoryMutation();
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null); // State to hold category being edited
+  const [updateCategory, { isLoading: uLoading }] = useUpdateCategoryMutation();
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [slug, setSlug] = useState<string>("");
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset, // Reset form for update
-    setValue, // To set specific values dynamically (e.g., slug)
+    reset,
+    setValue,
   } = useForm<ICategory>();
 
-  // Function to generate a slug from the category name
   const generateSlug = (name: string) => {
     return name
       .toLowerCase()
@@ -337,17 +335,13 @@ const Category = () => {
       .replace(/[^\w\-]+/g, "");
   };
 
-  // On submit for create or update
   const onSubmit: SubmitHandler<ICategory> = async (data) => {
-    // Set the slug if updating
     const updatedData = { ...data, slug: slug || generateSlug(data.name) };
 
     try {
       if (editingCategory) {
-        // If we're editing, update category with new slug
         await updateCategory({ id: editingCategory.id, ...updatedData });
       } else {
-        // If we're creating, create category
         await categoryPost(updatedData);
       }
     } catch (err) {
@@ -355,16 +349,15 @@ const Category = () => {
     }
   };
 
-  // Handle clicking "Update" button
   const handleUpdate = (category: Category) => {
     setEditingCategory(category);
     reset({ name: category.name });
-    setSlug(category.slug); // Set the slug for the existing category
+    setSlug(category.slug);
   };
 
   useEffect(() => {
     if (!editingCategory) {
-      setSlug(""); // Reset slug if creating a new category
+      setSlug("");
     }
   }, [editingCategory]);
 
@@ -395,8 +388,8 @@ const Category = () => {
             {...register("name", { required: "Category name is required" })}
             onChange={(e) => {
               const name = e.target.value;
-              setValue("name", name); // Update name field in form
-              setSlug(generateSlug(name)); // Auto-generate slug
+              setValue("name", name);
+              setSlug(generateSlug(name));
             }}
           />
           {errors.name && (
