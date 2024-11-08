@@ -10,22 +10,35 @@ const postApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["post"],
     }),
-    // getCategory: builder.query({
-    //   query: () => ({
-    //     url: "/post/category/",
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["Category"],
-    // }),
-    // updateCategory: builder.mutation({
-    //   query: ({ id, ...data }) => ({
-    //     url: `/post/category/${id}/`,
-    //     method: "PUT",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["Category"],
-    // }),
+    getPost: builder.query({
+      query: (userId) => ({
+        url: `/post/post/?user=${userId}`,
+        method: "GET",
+      }),
+      providesTags: ["post"],
+    }),
+    updatePost: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/post/post/${id}/`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["post"],
+    }),
+    deletePost: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/post/post/${id}/`,
+        method: "DELETE",
+        body: data,
+      }),
+      invalidatesTags: ["post"],
+    }),
   }),
 });
 
-export const { useAddPostMutation } = postApi;
+export const {
+  useAddPostMutation,
+  useGetPostQuery,
+  useUpdatePostMutation,
+  useDeletePostMutation,
+} = postApi;

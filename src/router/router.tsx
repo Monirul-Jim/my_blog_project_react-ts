@@ -13,6 +13,7 @@ import TermsAndConditions from "../Shared/TermsCondition/TermsCondition";
 import Category from "../dashboard/Category/Category";
 import NotFound from "../NotFound/NotFound";
 import MyPost from "../Post/MyPost";
+import About from "../Shared/About/About";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/our-terms-and-condition",
         element: <TermsAndConditions />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },
