@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useGetCategoryQuery } from "../../redux/feature/post/categoryApi";
 import { useGetAllPostQuery } from "../../redux/feature/post/postApi";
+
 type Category = {
   id: number;
   name: string;
@@ -14,7 +16,11 @@ type Post = {
   category: Category[];
   created_at: Date;
 };
+
 const UserSeePost = () => {
+  const [page, setPage] = useState(1);
+  const [spost, ssetPost] = useState<Post[]>([]);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const categorySlug = searchParams.get("category_slug");
   const timeFilter = searchParams.get("time");
@@ -25,13 +31,31 @@ const UserSeePost = () => {
     isError: cError,
   } = useGetCategoryQuery(null);
   const {
-    data: posts,
+    data,
     isLoading: pLoading,
     isError: pError,
   } = useGetAllPostQuery({
     category_slug: categorySlug,
     time: timeFilter,
   });
+  useEffect(() => {
+    if (data) {
+      ssetPost((prevPosts) => [...prevPosts, ...data.results]); // Append new posts
+    }
+  }, [data]);
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+      document.documentElement.offsetHeight
+    )
+      return;
+    setPage((prevPage) => prevPage + 1); // Increment page
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   if (cLoading) return <p>Categories Loading........</p>;
   if (pLoading) return <p>Posts Loading........</p>;
@@ -39,102 +63,55 @@ const UserSeePost = () => {
   if (pError) return <p>Posts Error!!!!!</p>;
 
   return (
-    <div className="flex">
-      <div className="w-1/4 p-4 border-r">
-        <h2 className="font-bold mb-2">Categories</h2>
-        <ul>
-          <li className="py-1">
-            <a
-              href="/"
-              className={`text-blue-600 hover:underline ${
-                !categorySlug && !timeFilter ? "font-bold text-black" : ""
-              }`}
-            >
-              All
-            </a>
-          </li>
-          {categories?.map((category: Category) => (
-            <li key={category.id} className="py-1">
-              <a
-                href={
-                  categorySlug === category.slug
-                    ? `?time=${timeFilter || ""}`
-                    : `?category_slug=${category.slug}&time=${timeFilter || ""}`
-                }
-                className={`text-blue-600 hover:underline ${
-                  categorySlug === category.slug ? "font-bold text-black" : ""
-                }`}
-              >
-                {category.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <h2 className="font-bold mb-2 mt-4">Filter by Time</h2>
-        <ul>
-          <li className="py-1">
-            <a
-              href={
-                timeFilter === "last_year"
-                  ? `?category_slug=${categorySlug || ""}`
-                  : `?category_slug=${categorySlug || ""}&time=last_year`
-              }
-              className={`text-blue-600 hover:underline ${
-                timeFilter === "last_year" ? "font-bold text-black" : ""
-              }`}
-            >
-              Last Year
-            </a>
-          </li>
-          <li className="py-1">
-            <a
-              href={
-                timeFilter === "last_month"
-                  ? `?category_slug=${categorySlug || ""}`
-                  : `?category_slug=${categorySlug || ""}&time=last_month`
-              }
-              className={`text-blue-600 hover:underline ${
-                timeFilter === "last_month" ? "font-bold text-black" : ""
-              }`}
-            >
-              Last Month
-            </a>
-          </li>
-          <li className="py-1">
-            <a
-              href={
-                timeFilter === "last_week"
-                  ? `?category_slug=${categorySlug || ""}`
-                  : `?category_slug=${categorySlug || ""}&time=last_week`
-              }
-              className={`text-blue-600 hover:underline ${
-                timeFilter === "last_week" ? "font-bold text-black" : ""
-              }`}
-            >
-              Last Week
-            </a>
-          </li>
-          <li className="py-1">
-            <a
-              href={
-                timeFilter === "today"
-                  ? `?category_slug=${categorySlug || ""}`
-                  : `?category_slug=${categorySlug || ""}&time=today`
-              }
-              className={`text-blue-600 hover:underline ${
-                timeFilter === "today" ? "font-bold text-black" : ""
-              }`}
-            >
-              Today
-            </a>
-          </li>
-        </ul>
+    <div className="lg:flex">
+      <div className="w-1/4 p-4 border-r hidden lg:block">
+        <CategoryMenu
+          categories={categories}
+          categorySlug={categorySlug}
+          timeFilter={timeFilter}
+        />
       </div>
-      <div className="w-3/4 p-4">
+      <div className="lg:hidden p-4 relative">
+        <h1>
+          Filter By <span className="font-bold">Time</span> and{" "}
+          <span className="font-bold">Categories</span>
+        </h1>
+        <button
+          className="text-xl font-bold"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+
+        {menuOpen && (
+          <div
+            className={`fixed inset-0 bg-gray-800 text-white shadow-lg p-4 z-[1000] overflow-auto 
+                  transform transition-transform duration-300 ease-in-out 
+                  ${
+                    menuOpen
+                      ? "translate-x-0 opacity-100"
+                      : "-translate-x-full opacity-0"
+                  }`}
+          >
+            <button
+              className="text-white text-2xl absolute top-4 right-4"
+              onClick={() => setMenuOpen(false)}
+            >
+              ✕
+            </button>
+            <CategoryMenu
+              categories={categories}
+              categorySlug={categorySlug}
+              timeFilter={timeFilter}
+            />
+          </div>
+        )}
+      </div>
+
+      <div className="lg:w-3/4 p-2">
         <h2 className="font-bold mb-4">Posts</h2>
         <div className="space-y-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {posts?.map((post: Post) => (
+          {data?.map((post: Post) => (
             <div key={post.id} className="bg-white p-4 rounded-lg shadow-md">
               <img
                 src={post.image}
@@ -156,6 +133,7 @@ const UserSeePost = () => {
                 ))}
               </div>
               <a
+                target="_blank"
                 href={`/post/${post.id}`}
                 className="text-blue-600 hover:underline"
               >
@@ -168,5 +146,105 @@ const UserSeePost = () => {
     </div>
   );
 };
+
+const CategoryMenu = ({
+  categories,
+  categorySlug,
+  timeFilter,
+}: {
+  categories: Category[];
+  categorySlug: string | null;
+  timeFilter: string | null;
+}) => (
+  <>
+    <h2 className="font-bold mb-2">Categories</h2>
+    <ul>
+      <li className="py-1">
+        <a
+          href="/"
+          className={` ${
+            !categorySlug && !timeFilter ? "font-bold text-black" : ""
+          }`}
+        >
+          All
+        </a>
+      </li>
+      {categories?.map((category: Category) => (
+        <li key={category.id} className="py-1">
+          <a
+            href={
+              categorySlug === category.slug
+                ? `?time=${timeFilter || ""}`
+                : `?category_slug=${category.slug}&time=${timeFilter || ""}`
+            }
+            className={` ${
+              categorySlug === category.slug ? "font-bold text-black" : ""
+            }`}
+          >
+            {category.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <h2 className="font-bold mb-2 mt-4">Filter by Time</h2>
+    <ul>
+      <li className="py-1">
+        <a
+          href={
+            timeFilter === "last_year"
+              ? `?category_slug=${categorySlug || ""}`
+              : `?category_slug=${categorySlug || ""}&time=last_year`
+          }
+          className={` ${
+            timeFilter === "last_year" ? "font-bold text-black" : ""
+          }`}
+        >
+          Last Year
+        </a>
+      </li>
+      <li className="py-1">
+        <a
+          href={
+            timeFilter === "last_month"
+              ? `?category_slug=${categorySlug || ""}`
+              : `?category_slug=${categorySlug || ""}&time=last_month`
+          }
+          className={` ${
+            timeFilter === "last_month" ? "font-bold text-black" : ""
+          }`}
+        >
+          Last Month
+        </a>
+      </li>
+      <li className="py-1">
+        <a
+          href={
+            timeFilter === "last_week"
+              ? `?category_slug=${categorySlug || ""}`
+              : `?category_slug=${categorySlug || ""}&time=last_week`
+          }
+          className={` ${
+            timeFilter === "last_week" ? "font-bold text-black" : ""
+          }`}
+        >
+          Last Week
+        </a>
+      </li>
+      <li className="py-1">
+        <a
+          href={
+            timeFilter === "today"
+              ? `?category_slug=${categorySlug || ""}`
+              : `?category_slug=${categorySlug || ""}&time=today`
+          }
+          className={` ${timeFilter === "today" ? "font-bold text-black" : ""}`}
+        >
+          Today
+        </a>
+      </li>
+    </ul>
+  </>
+);
 
 export default UserSeePost;
