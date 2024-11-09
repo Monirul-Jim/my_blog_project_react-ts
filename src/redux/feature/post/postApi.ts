@@ -33,6 +33,26 @@ const postApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["post"],
     }),
+    getAllPost: builder.query({
+      query: ({ category_slug, time }) => {
+        const params = new URLSearchParams();
+        if (category_slug) params.append("category_slug", category_slug);
+        if (time) params.append("time", time);
+        return {
+          url: `/post/post/?${params.toString()}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["post"],
+    }),
+
+    getSinglePost: builder.query({
+      query: ({ id }) => ({
+        url: `/post/post/${id}/`,
+        method: "GET",
+      }),
+      providesTags: ["post"],
+    }),
   }),
 });
 
@@ -41,4 +61,6 @@ export const {
   useGetPostQuery,
   useUpdatePostMutation,
   useDeletePostMutation,
+  useGetAllPostQuery,
+  useGetSinglePostQuery,
 } = postApi;

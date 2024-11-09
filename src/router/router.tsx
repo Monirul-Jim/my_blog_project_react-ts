@@ -12,8 +12,8 @@ import Post from "../Post/Post";
 import TermsAndConditions from "../Shared/TermsCondition/TermsCondition";
 import Category from "../dashboard/Category/Category";
 import NotFound from "../NotFound/NotFound";
-import MyPost from "../Post/MyPost";
 import About from "../Shared/About/About";
+import UserSeeSinglePost from "../Home/UserSeePost/UserSeeSinglePost";
 
 const router = createBrowserRouter([
   {
@@ -45,16 +45,16 @@ const router = createBrowserRouter([
         element: <Post />,
       },
       {
-        path: "/writer-edit-write-his-her-post-as-his-wise",
-        element: <MyPost />,
-      },
-      {
         path: "/our-terms-and-condition",
         element: <TermsAndConditions />,
       },
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "post/:id",
+        element: <UserSeeSinglePost />,
       },
     ],
   },
