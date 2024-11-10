@@ -11,9 +11,13 @@ const postApi = baseApi.injectEndpoints({
       invalidatesTags: ["post"],
     }),
     getPost: builder.query({
-      query: (userId) => ({
+      query: ({ userId, page }) => ({
         url: `/post/post/?user=${userId}`,
         method: "GET",
+        params: {
+          user: userId,
+          page: page,
+        },
       }),
       providesTags: ["post"],
     }),
@@ -33,11 +37,24 @@ const postApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["post"],
     }),
+    // getAllPost: builder.query({
+    //   query: ({ category_slug, time }) => {
+    //     const params = new URLSearchParams();
+    //     if (category_slug) params.append("category_slug", category_slug);
+    //     if (time) params.append("time", time);
+    //     return {
+    //       url: `/post/post/?${params.toString()}`,
+    //       method: "GET",
+    //     };
+    //   },
+    //   providesTags: ["post"],
+    // }),
     getAllPost: builder.query({
-      query: ({ category_slug, time }) => {
+      query: ({ category_slug, time, page = 1 }) => {
         const params = new URLSearchParams();
         if (category_slug) params.append("category_slug", category_slug);
         if (time) params.append("time", time);
+        params.append("page", page);
         return {
           url: `/post/post/?${params.toString()}`,
           method: "GET",

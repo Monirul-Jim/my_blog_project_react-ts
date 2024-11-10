@@ -9,6 +9,7 @@ type Category = {
 const UserSeeSinglePost = () => {
   const { id } = useParams<{ id: string }>();
   const { data: post, isLoading, isError } = useGetSinglePostQuery({ id });
+  console.log(post);
 
   if (isLoading) return <p>Loading post...</p>;
   if (isError) return <p>Error loading post.</p>;
