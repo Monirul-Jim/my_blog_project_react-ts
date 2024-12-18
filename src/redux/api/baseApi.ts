@@ -21,7 +21,7 @@ import { RootState } from "../feature/store";
 import { logout, setUser } from "../feature/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:8000",
+  baseUrl: "https://blog-publish-app.onrender.com",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -42,19 +42,22 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 404) {
-    console.error(result.error.data.message);
+    console.error("error");
   }
   if (result?.error?.status === 403) {
-    console.error(result.error.data.message);
+    console.error("error");
   }
   if (result?.error?.status === 401) {
     //* Send Refresh
     console.log("Sending refresh token");
 
-    const res = await fetch("http://localhost:8000/auth/refresh/", {
-      method: "POST",
-      credentials: "include",
-    });
+    const res = await fetch(
+      "https://blog-publish-app.onrender.com/auth/refresh/",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
 
     const data = await res.json();
 

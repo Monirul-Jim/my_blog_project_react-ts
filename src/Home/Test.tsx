@@ -802,212 +802,213 @@
 // };
 
 // export default Test;
-import React, { useRef } from "react";
 
-const Test: React.FC = () => {
-  const editorRef = useRef<HTMLDivElement>(null);
+// import React, { useRef } from "react";
 
-  const applyCommand = (command: string, value: string | null = null) => {
-    if (editorRef.current) {
-      editorRef.current.focus();
-      document.execCommand(command, false, value);
-    }
-  };
+// const Test: React.FC = () => {
+//   const editorRef = useRef<HTMLDivElement>(null);
 
-  const handleLink = () => {
-    const url = prompt("Enter the URL");
-    if (url) applyCommand("createLink", url);
-  };
+//   const applyCommand = (command: string, value: string | null = null) => {
+//     if (editorRef.current) {
+//       editorRef.current.focus();
+//       document.execCommand(command, false, value);
+//     }
+//   };
 
-  const handleImage = () => {
-    const url = prompt("Enter the Image URL");
-    if (url) applyCommand("insertImage", url);
-  };
+//   const handleLink = () => {
+//     const url = prompt("Enter the URL");
+//     if (url) applyCommand("createLink", url);
+//   };
 
-  const handleColorChange = (color: string) => {
-    applyCommand("foreColor", color);
-  };
+//   const handleImage = () => {
+//     const url = prompt("Enter the Image URL");
+//     if (url) applyCommand("insertImage", url);
+//   };
 
-  const handleTableInsert = () => {
-    const rows = prompt("Enter the number of rows:");
-    const cols = prompt("Enter the number of columns:");
+//   const handleColorChange = (color: string) => {
+//     applyCommand("foreColor", color);
+//   };
 
-    if (rows && cols) {
-      const tableHtml = generateTableHTML(parseInt(rows), parseInt(cols));
-      insertHTMLAtCursor(tableHtml);
-    }
-  };
+//   const handleTableInsert = () => {
+//     const rows = prompt("Enter the number of rows:");
+//     const cols = prompt("Enter the number of columns:");
 
-  const generateTableHTML = (rows: number, cols: number) => {
-    let tableHtml =
-      '<table border="1" style="border-collapse: collapse; width: 100%;">';
-    for (let i = 0; i < rows; i++) {
-      tableHtml += "<tr>";
-      for (let j = 0; j < cols; j++) {
-        tableHtml +=
-          '<td style="border: 1px solid #ddd; padding: 8px;">&nbsp;</td>';
-      }
-      tableHtml += "</tr>";
-    }
-    tableHtml += "</table>";
-    return tableHtml;
-  };
+//     if (rows && cols) {
+//       const tableHtml = generateTableHTML(parseInt(rows), parseInt(cols));
+//       insertHTMLAtCursor(tableHtml);
+//     }
+//   };
 
-  const insertHTMLAtCursor = (html: string) => {
-    if (editorRef.current) {
-      editorRef.current.focus();
-      document.execCommand("insertHTML", false, html);
-    }
-  };
+//   const generateTableHTML = (rows: number, cols: number) => {
+//     let tableHtml =
+//       '<table border="1" style="border-collapse: collapse; width: 100%;">';
+//     for (let i = 0; i < rows; i++) {
+//       tableHtml += "<tr>";
+//       for (let j = 0; j < cols; j++) {
+//         tableHtml +=
+//           '<td style="border: 1px solid #ddd; padding: 8px;">&nbsp;</td>';
+//       }
+//       tableHtml += "</tr>";
+//     }
+//     tableHtml += "</table>";
+//     return tableHtml;
+//   };
 
-  const handleSubmit = () => {
-    const content = editorRef.current?.innerHTML;
-    console.log("Editor Content:", content);
-  };
+//   const insertHTMLAtCursor = (html: string) => {
+//     if (editorRef.current) {
+//       editorRef.current.focus();
+//       document.execCommand("insertHTML", false, html);
+//     }
+//   };
 
-  const handleList = (isOrdered: boolean) => {
-    const listItemsInput = prompt("Enter the list items separated by commas");
-    if (listItemsInput) {
-      const listItems = listItemsInput.split(",").map((item) => item.trim());
+//   const handleSubmit = () => {
+//     const content = editorRef.current?.innerHTML;
+//     console.log("Editor Content:", content);
+//   };
 
-      let listHTML = "";
-      if (isOrdered) {
-        listHTML = listItems
-          .map((item, index) => `<div>${index + 1}. ${item}</div>`)
-          .join("");
-      } else {
-        listHTML = listItems.map((item) => `<div>• ${item}</div>`).join("");
-      }
+//   const handleList = (isOrdered: boolean) => {
+//     const listItemsInput = prompt("Enter the list items separated by commas");
+//     if (listItemsInput) {
+//       const listItems = listItemsInput.split(",").map((item) => item.trim());
 
-      insertHTMLAtCursor(listHTML);
-    }
-  };
+//       let listHTML = "";
+//       if (isOrdered) {
+//         listHTML = listItems
+//           .map((item, index) => `<div>${index + 1}. ${item}</div>`)
+//           .join("");
+//       } else {
+//         listHTML = listItems.map((item) => `<div>• ${item}</div>`).join("");
+//       }
 
-  // Handle Text Alignment (Left, Center, Right)
-  const handleTextAlign = (alignment: "left" | "center" | "right") => {
-    document.execCommand(
-      "justify" + alignment.charAt(0).toUpperCase() + alignment.slice(1)
-    );
-  };
-  const handleFontSizeChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const fontSize = event.target.value;
-    if (fontSize) {
-      applyCommand("fontSize", fontSize);
-    }
-  };
-  return (
-    <div className="border border-gray-300 p-4 rounded-lg">
-      {/* Toolbar */}
-      <div className="flex flex-wrap items-center space-x-2 mb-4 border-b pb-2">
-        <select
-          onChange={handleFontSizeChange}
-          defaultValue=""
-          className="border p-1 rounded"
-        >
-          <option value="" disabled>
-            Select font size
-          </option>
-          <option value="1">Small</option>
-          <option value="2">Large Small</option>
-          <option value="3">Normal</option>
-          <option value="5">Large</option>
-          <option value="7">Extra Large</option>
-        </select>
+//       insertHTMLAtCursor(listHTML);
+//     }
+//   };
 
-        {/* Bold, Italic, Underline */}
-        <button
-          onClick={() => applyCommand("bold")}
-          className="p-1 border rounded font-bold"
-        >
-          B
-        </button>
-        <button
-          onClick={() => applyCommand("italic")}
-          className="p-1 border rounded italic"
-        >
-          I
-        </button>
-        <button
-          onClick={() => applyCommand("underline")}
-          className="p-1 border rounded underline"
-        >
-          U
-        </button>
+//   // Handle Text Alignment (Left, Center, Right)
+//   const handleTextAlign = (alignment: "left" | "center" | "right") => {
+//     document.execCommand(
+//       "justify" + alignment.charAt(0).toUpperCase() + alignment.slice(1)
+//     );
+//   };
+//   const handleFontSizeChange = (
+//     event: React.ChangeEvent<HTMLSelectElement>
+//   ) => {
+//     const fontSize = event.target.value;
+//     if (fontSize) {
+//       applyCommand("fontSize", fontSize);
+//     }
+//   };
+//   return (
+//     <div className="border border-gray-300 p-4 rounded-lg">
+//       {/* Toolbar */}
+//       <div className="flex flex-wrap items-center space-x-2 mb-4 border-b pb-2">
+//         <select
+//           onChange={handleFontSizeChange}
+//           defaultValue=""
+//           className="border p-1 rounded"
+//         >
+//           <option value="" disabled>
+//             Select font size
+//           </option>
+//           <option value="1">Small</option>
+//           <option value="2">Large Small</option>
+//           <option value="3">Normal</option>
+//           <option value="5">Large</option>
+//           <option value="7">Extra Large</option>
+//         </select>
 
-        {/* Custom Text Color */}
-        <input
-          type="color"
-          onChange={(e) => handleColorChange(e.target.value)}
-          className="border p-1 rounded"
-        />
+//         {/* Bold, Italic, Underline */}
+//         <button
+//           onClick={() => applyCommand("bold")}
+//           className="p-1 border rounded font-bold"
+//         >
+//           B
+//         </button>
+//         <button
+//           onClick={() => applyCommand("italic")}
+//           className="p-1 border rounded italic"
+//         >
+//           I
+//         </button>
+//         <button
+//           onClick={() => applyCommand("underline")}
+//           className="p-1 border rounded underline"
+//         >
+//           U
+//         </button>
 
-        {/* Link and Image */}
-        <button onClick={handleLink} className="p-1 border rounded">
-          Link
-        </button>
-        <button onClick={handleImage} className="p-1 border rounded">
-          Image
-        </button>
+//         {/* Custom Text Color */}
+//         <input
+//           type="color"
+//           onChange={(e) => handleColorChange(e.target.value)}
+//           className="border p-1 rounded"
+//         />
 
-        {/* Lists */}
-        <button
-          onClick={() => handleList(false)} // Unordered list
-          className="p-1 border rounded"
-        >
-          • List
-        </button>
-        <button
-          onClick={() => handleList(true)} // Ordered list
-          className="p-1 border rounded"
-        >
-          1.Number List
-        </button>
+//         {/* Link and Image */}
+//         <button onClick={handleLink} className="p-1 border rounded">
+//           Link
+//         </button>
+//         <button onClick={handleImage} className="p-1 border rounded">
+//           Image
+//         </button>
 
-        {/* Text Alignment */}
-        <button
-          onClick={() => handleTextAlign("left")}
-          className="p-1 border rounded"
-        >
-          Left
-        </button>
-        <button
-          onClick={() => handleTextAlign("center")}
-          className="p-1 border rounded"
-        >
-          Center
-        </button>
-        <button
-          onClick={() => handleTextAlign("right")}
-          className="p-1 border rounded"
-        >
-          Right
-        </button>
+//         {/* Lists */}
+//         <button
+//           onClick={() => handleList(false)} // Unordered list
+//           className="p-1 border rounded"
+//         >
+//           • List
+//         </button>
+//         <button
+//           onClick={() => handleList(true)} // Ordered list
+//           className="p-1 border rounded"
+//         >
+//           1.Number List
+//         </button>
 
-        {/* Table */}
-        <button onClick={handleTableInsert} className="p-1 border rounded">
-          Table
-        </button>
-      </div>
+//         {/* Text Alignment */}
+//         <button
+//           onClick={() => handleTextAlign("left")}
+//           className="p-1 border rounded"
+//         >
+//           Left
+//         </button>
+//         <button
+//           onClick={() => handleTextAlign("center")}
+//           className="p-1 border rounded"
+//         >
+//           Center
+//         </button>
+//         <button
+//           onClick={() => handleTextAlign("right")}
+//           className="p-1 border rounded"
+//         >
+//           Right
+//         </button>
 
-      {/* Editable Content */}
-      <div
-        ref={editorRef}
-        contentEditable
-        suppressContentEditableWarning
-        className="editor-container border border-gray-300 p-2 min-h-[200px] rounded-lg focus:outline-none"
-      ></div>
+//         {/* Table */}
+//         <button onClick={handleTableInsert} className="p-1 border rounded">
+//           Table
+//         </button>
+//       </div>
 
-      {/* Output for debugging */}
-      <button
-        className="mt-4 p-2 bg-blue-500 text-white rounded"
-        onClick={handleSubmit}
-      >
-        Submit
-      </button>
-    </div>
-  );
-};
+//       {/* Editable Content */}
+//       <div
+//         ref={editorRef}
+//         contentEditable
+//         suppressContentEditableWarning
+//         className="editor-container border border-gray-300 p-2 min-h-[200px] rounded-lg focus:outline-none"
+//       ></div>
 
-export default Test;
+//       {/* Output for debugging */}
+//       <button
+//         className="mt-4 p-2 bg-blue-500 text-white rounded"
+//         onClick={handleSubmit}
+//       >
+//         Submit
+//       </button>
+//     </div>
+//   );
+// };
+
+// export default Test;
