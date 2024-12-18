@@ -83,14 +83,15 @@ const Navbar = () => {
                   </a>
                 </>
               )}
-              <a
-                href="/become-a-writer/be-writer-and-spreed-knowledge"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Become a Writer
-              </a>
+
               {user ? (
                 <>
+                  <a
+                    href="/become-a-writer/be-writer-and-spreed-knowledge"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Become a Writer
+                  </a>
                   <button
                     onClick={handleLogout}
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -146,14 +147,15 @@ const Navbar = () => {
                 </a>
               </>
             )}
-            <a
-              href="/become-a-writer/be-writer-and-spreed-knowledge"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            >
-              Become a Writer
-            </a>
+
             {user ? (
               <>
+                <a
+                  href="/become-a-writer/be-writer-and-spreed-knowledge"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                >
+                  Become a Writer
+                </a>
                 <button
                   onClick={handleLogout}
                   className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
