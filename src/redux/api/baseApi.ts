@@ -21,7 +21,7 @@ import { RootState } from "../feature/store";
 import { logout, setUser } from "../feature/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://blog-publish-app.onrender.com",
+  baseUrl: "https://my-blog-project-drf.onrender.com",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -52,7 +52,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     console.log("Sending refresh token");
 
     const res = await fetch(
-      "https://blog-publish-app.onrender.com/auth/refresh/",
+      "https://my-blog-project-drf.onrender.com/auth/refresh/",
       {
         method: "POST",
         credentials: "include",

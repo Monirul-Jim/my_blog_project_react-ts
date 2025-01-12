@@ -252,6 +252,7 @@
 // export default UserSeePost;
 
 //<h2 className="font-bold mb-4">Posts { spost?.length}</h2>
+
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useGetCategoryQuery } from "../../redux/feature/post/categoryApi";
